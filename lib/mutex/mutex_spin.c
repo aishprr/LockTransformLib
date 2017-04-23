@@ -1,12 +1,12 @@
-#include <mutex_type.h>
-#include <common.h>
+#include "mutex_type.h"
+#include "../inc/common.h"
 
 
 #define UNLOCKED (0)
 #define LOCKED (1)
 
 
-int mutex_create(mutex_t *m)  {
+int mutex_create(mutex_t *m) {
   m->lock = UNLOCKED;
   return SUCCESS_RETVAL;
 }
