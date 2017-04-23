@@ -3,7 +3,13 @@
 
 typedef struct mutex {
 
+#ifdef MUTEX_SPIN
   int lock;
+#endif
+#ifdef MUTEX_QUEUE
+  int lock_count;
+  int queue_count;
+#endif
 
 } mutex_t;
 

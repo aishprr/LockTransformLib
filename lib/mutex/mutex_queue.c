@@ -1,13 +1,10 @@
 #include <mutex_type.h>
 #include <common.h>
 
-#define UNLOCKED (0)
-#define LOCKED (1)
-
 int mutex_create(mutex_t *m)
 {
-  mp->lock_count = 1;
-  mp->queue_count = 0;
+  m->lock_count = 0;
+  m->queue_count = 0;
    
   return SUCCESS_RETVAL;
 }
