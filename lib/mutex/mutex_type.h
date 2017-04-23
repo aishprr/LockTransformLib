@@ -10,6 +10,8 @@ typedef struct mutex {
   int lock_count;
   int queue_count;
 #endif
+#ifdef MUTEX_MCS_TICKET
+#endif
 
 } mutex_t;
 
