@@ -1,0 +1,7 @@
+#ifndef ATOMIC_ASM_WRAPPER
+#define ATOMIC_ASM_WRAPPER
+
+
+
+
+#endif /* ATOMIC_ASM_WRAPPER */

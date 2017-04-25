@@ -15,6 +15,10 @@ typedef struct mutex {
 #ifdef MUTEX_MCS_TICKET
 #endif
 
+#ifdef MUTEX_TRANSACTION_1
+
+#endif
+
 } mutex_t;
 
 int mutex_create(mutex_t *);
