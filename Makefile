@@ -11,7 +11,7 @@ CXXFLAGS=-I$(INC) -O1 -Wall -fopenmp -DRUN_MIC -offload-attribute-target=mic
 #INCFLAGS=-I$(INC)
 
 
-OBJS=$(MUTEXDIR)/mutex_spin.o\
+OBJS=$(MUTEXDIR)/mutex_queue.o\
 	
 
 TESTS=$(TESTDIR)/test1

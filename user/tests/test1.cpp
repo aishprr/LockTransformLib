@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <cstddef>
 
-#define PARALLEL_ADDS (100)
+#define PARALLEL_ADDS (10)
 
 int matrix_multiply()
 {
@@ -14,11 +14,12 @@ int matrix_multiply()
 
 
 int main() {
+
   mutex_t mu;
   mutex_create(&mu);
 
   int i = 0;
-  #pragma omp parallel
+  #pragma omp parallel shared(mu)
   {
     int tid = omp_get_thread_num();
 
