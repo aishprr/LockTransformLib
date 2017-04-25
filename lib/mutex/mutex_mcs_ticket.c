@@ -1,3 +1,3 @@
-#include <mutex_type.h>
-#include <common.h>
+#include "../inc/mutex_type.h"
+#include "../inc/common.h"
 

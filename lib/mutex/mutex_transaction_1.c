@@ -1,12 +1,12 @@
-#include <mutex_type.h>
-#include <common.h>
+#include "../inc/mutex_type.h"
+#include "../inc/common.h"
 
 int mutex_create(mutex_t *m)
 {
-  
+  return SUCCESS_RETVAL; 
 }
 
-int mutex_lock(mutex_t *m)
+void mutex_lock(mutex_t *m)
 {
     
   

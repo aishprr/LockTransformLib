@@ -1,5 +1,5 @@
-#include <mutex_type.h>
-#include <common.h>
+#include "../inc/mutex_type.h"
+#include "../inc/common.h"
 
 int mutex_create(mutex_t *m)
 {
@@ -9,7 +9,7 @@ int mutex_create(mutex_t *m)
   return SUCCESS_RETVAL;
 }
 
-int mutex_lock(mutex_t *m)
+void mutex_lock(mutex_t *m)
 {
     
   int q_num = __sync_fetch_and_add(&m->queue_count, 1);
@@ -17,7 +17,6 @@ int mutex_lock(mutex_t *m)
   /** Continuously wait until it's me chance, but only reads,
       no invalidations */
   while((m->lock_count != q_num));
-
 }
 
 void mutex_unlock(mutex_t *m)
