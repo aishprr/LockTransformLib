@@ -4,16 +4,15 @@ MUTEXDIR=$(ROOT)/lib/mutex
 TESTDIR=$(ROOT)/user/tests
 
 CXX=g++
-CXXFLAGS=-I$(INC) -O1 -Wall -openmp -DRUN_MIC -offload-attribute-target=mic
+CXXFLAGS=-I$(INC) -O1 -Wall -fopenmp -DRUN_MIC -offload-attribute-target=mic
 
 #CPPFLAGS=-std=c++11 -fpic -m64 -O3 -Wall -openmp -offload-attribute-target=mic -DRUN_MIC
 #CFLAGS=-c -fpic -Wall -m64 -O3 -openmp -offload-attribute-target=mic -DRUN_MIC
 #INCFLAGS=-I$(INC)
 
 
-OBJS=$(MUTEXDIR)/mutex_mcs_ticket.o\
-	$(MUTEXDIR)/mutex_queue.o $(MUTEXDIR)/mutex_spin.o\
-	$(MUTEXDIR)/mutex_transaction_1.o
+OBJS=$(MUTEXDIR)/mutex_spin.o\
+	
 
 TESTS=$(TESTDIR)/test1
 
