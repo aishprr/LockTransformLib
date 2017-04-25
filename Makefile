@@ -15,7 +15,7 @@ OBJS=$(MUTEXDIR)/mutex_mcs_ticket.o\
 	$(MUTEXDIR)/mutex_queue.o $(MUTEXDIR)/mutex_spin.o\
 	$(MUTEXDIR)/mutex_transaction_1.o
 
-TESTS=$(TESTDIR)/test1.cpp $(TESTDIR)/test1.c
+TESTS=$(TESTDIR)/test1.cpp
 
 #HEADERS=$(INC)/mcs_hybrid_lock.h $(INC)/mcs_queue_lock.h $(INC)/mcs_ticket_lock.h $(INC)/tts_lock.h
 all: clean $(OBJS) $(TESTS)
