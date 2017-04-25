@@ -15,15 +15,18 @@ OBJS=$(MUTEXDIR)/mutex_mcs_ticket.o\
 	$(MUTEXDIR)/mutex_queue.o $(MUTEXDIR)/mutex_spin.o\
 	$(MUTEXDIR)/mutex_transaction_1.o
 
-TESTS=$(TESTDIR)/test1.cpp
+TESTS=$(TESTDIR)/test1
 
 #HEADERS=$(INC)/mcs_hybrid_lock.h $(INC)/mcs_queue_lock.h $(INC)/mcs_ticket_lock.h $(INC)/tts_lock.h
+# first clean, then the object files and then the tests
 all: clean $(OBJS) $(TESTS)
 
 includes = $(wildcard $(INC)/*.h)
 
+#%: $(OBJS)
+#	$(CXX) $(CXXFLAGS) -std=c++11 -o $@ $(OBJS)
 
-%.o: %.cpp ${includes}
+%:%.cpp ${includes}
 	$(CXX) $(CXXFLAGS) -std=c++11 $(OBJS) $< -o $@
 
 %.o: %.cpp
