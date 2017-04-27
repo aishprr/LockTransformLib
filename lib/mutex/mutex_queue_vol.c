@@ -16,7 +16,17 @@ void mutex_lock(mutex_t *m)
   
   /** Continuously wait until it's me chance, but only reads,
       no invalidations */
-  while(m->lock_count != q_num);
+  while(m->lock_count != q_num) {
+#ifdef PROP_BACKOFF_LOOP
+
+#endif
+#ifdef EXP_BACKOFF_LOOP
+
+#endif
+#ifdef PROP_BACKOFF_YIELD
+
+#endif
+  }
   
 }
 
