@@ -10,9 +10,8 @@ CXXFLAGS=-I$(INC) -O1 -Wall -fopenmp -DRUN_MIC -offload-attribute-target=mic
 #CFLAGS=-c -fpic -Wall -m64 -O3 -openmp -offload-attribute-target=mic -DRUN_MIC
 #INCFLAGS=-I$(INC)
 
-OBJS=$(MUTEXDIR)/mutex_queue.o\
-	
-
+OBJS=$(MUTEXDIR)/mutex_spin.o\
+			
 TESTS=$(TESTDIR)/test1
 
 #HEADERS=$(INC)/mcs_hybrid_lock.h $(INC)/mcs_queue_lock.h $(INC)/mcs_ticket_lock.h $(INC)/tts_lock.h

@@ -21,9 +21,10 @@ void mutex_lock(mutex_t *m)
   
   /** Continuously wait until it's me chance, but only reads,
       no invalidations */
-  while(m->lock_count != q_num) {
-    #pragma omp flush
-  }
+  while(m->lock_count != q_num);
+  // {
+  //   #pragma omp flush
+  // }
   // {
   //   for (count = q_num; count < turn; count++);
   // }
@@ -43,7 +44,7 @@ void mutex_unlock(mutex_t *m)
   
   //__sync_synchronize();
   m->lock_count++;
-  #pragma omp flush 
+  //#pragma omp flush 
   
   printf("Unlocked!!! and now lock_count %d!!!\n", m->lock_count);
 }

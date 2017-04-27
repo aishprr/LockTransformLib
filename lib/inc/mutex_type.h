@@ -7,7 +7,11 @@ typedef struct mutex {
 //#ifdef MUTEX_SPIN
   int lock;
 //#endif
-//#ifdef MUTEX_QUEUE
+//#ifdef MUTEX_QUEUE_VOL
+  volatile int lock_count;
+  int queue_count;
+//#endif
+//#ifdef MUTEX_QUEUE_FLUSH
   int lock_count;
   int queue_count;
 //#endif
