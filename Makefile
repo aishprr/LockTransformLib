@@ -10,7 +10,6 @@ CXXFLAGS=-I$(INC) -O1 -Wall -fopenmp -DRUN_MIC -offload-attribute-target=mic
 #CFLAGS=-c -fpic -Wall -m64 -O3 -openmp -offload-attribute-target=mic -DRUN_MIC
 #INCFLAGS=-I$(INC)
 
-
 OBJS=$(MUTEXDIR)/mutex_queue.o\
 	
 
@@ -25,7 +24,7 @@ includes = $(wildcard $(INC)/*.h)
 #%: $(OBJS)
 #	$(CXX) $(CXXFLAGS) -std=c++11 -o $@ $(OBJS)
 
-%:%.cpp ${includes}
+%: %.cpp ${includes} $(OBJS)
 	$(CXX) $(CXXFLAGS) -std=c++11 $(OBJS) $< -o $@
 
 %.o: %.cpp
