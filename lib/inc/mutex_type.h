@@ -1,26 +1,26 @@
 #ifndef _MUTEX_TYPE_H
 #define _MUTEX_TYPE_H
 
+#define MUTEX_SPIN (1)
+
 typedef struct mutex {
 
 // TODO: to add to CFLAGS -D in Makefile
-//#ifdef MUTEX_SPIN
+#ifdef MUTEX_SPIN
   int lock;
-//#endif
-//#ifdef MUTEX_QUEUE_VOL
+#endif
+#ifdef MUTEX_QUEUE_VOL
   volatile int lock_count;
   int queue_count;
-//#endif
-//#ifdef MUTEX_QUEUE_FLUSH
+#endif
+#ifdef MUTEX_QUEUE_FLUSH
   int lock_count;
   int queue_count;
-//#endif
-//#ifdef MUTEX_MCS_TICKET
-//#endif
-
-// #ifdef MUTEX_TRANSACTION_1
-
-//#endif
+#endif
+#ifdef MUTEX_MCS_TICKET
+#endif
+#ifdef MUTEX_TRANSACTION_1
+#endif
 
 } mutex_t;
 

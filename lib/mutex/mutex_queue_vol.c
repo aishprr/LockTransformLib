@@ -1,5 +1,6 @@
 #include "../inc/mutex_type.h"
 #include "../inc/common.h"
+#include <sched.h>
 
 int mutex_create(mutex_t *m)
 {
@@ -23,9 +24,10 @@ void mutex_lock(mutex_t *m)
 #ifdef EXP_BACKOFF_LOOP
 
 #endif
-#ifdef PROP_BACKOFF_YIELD
-
+#ifdef YIELD_LOOP
+    sched_yield();
 #endif
+
   }
   
 }
