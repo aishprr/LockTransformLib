@@ -21,5 +21,5 @@ void mutex_lock(mutex_t *m) {
 }
 
 void mutex_unlock(mutex_t *m) {
-  __sync_bool_compare_and_swap(&m->lock, LOCKED, UNLOCKED);
+  m->lock = UNLOCKED;
 }
