@@ -4,13 +4,15 @@ MUTEXDIR=$(ROOT)/lib/mutex
 TESTDIR=$(ROOT)/user/tests
 
 CXX=g++
-CXXFLAGS=-I$(INC) -O1 -Wall -fopenmp -DRUN_MIC -offload-attribute-target=mic
+CXXFLAGS=-I$(INC) -O1 -Wall -mrtm -fopenmp -DRUN_MIC -offload-attribute-target=mic
 
 ###CPPFLAGS=-std=c++11 -fpic -m64 -O3 -Wall -openmp -offload-attribute-target=mic -DRUN_MIC
 ###CFLAGS=-c -fpic -Wall -m64 -O3 -openmp -offload-attribute-target=mic -DRUN_MIC
 ###INCFLAGS=-I$(INC)
 
-#OBJS=$(MUTEXDIR)/mutex_spin.o\
+OBJS=$(MUTEXDIR)/mutex_transaction_1.o\
+
+PRES_OBJS=$()
 			
 TESTS=$(TESTDIR)/test1
 

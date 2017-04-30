@@ -19,7 +19,6 @@ void mutex_lock(mutex_t *m)
       no invalidations */
   while(m->lock_count != q_num) {
 #ifdef PROP_BACKOFF_LOOP
-
 #endif
 #ifdef EXP_BACKOFF_LOOP
 

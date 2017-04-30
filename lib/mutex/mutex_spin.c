@@ -3,10 +3,8 @@
 #include <stdio.h>
 #include <sched.h>
 
-
 #define UNLOCKED (0)
 #define LOCKED (1)
-
 
 int mutex_create(mutex_t *m) {
   m->lock = UNLOCKED;
