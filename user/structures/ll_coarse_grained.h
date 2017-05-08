@@ -26,7 +26,7 @@ typedef struct
     int (*compare)(void *adata, void *bdata);
 } ll_coarse;
 
-void ll_coarse_init(ll_coarse *l, int (*compare)(ll_coarse_node *a, ll_coarse_node *b));
+void ll_coarse_init(ll_coarse *l, int (*compare)(void *a, void *b));
 
 void ll_coarse_insert(ll_coarse *l, ll_coarse_node *node, void *data);
 

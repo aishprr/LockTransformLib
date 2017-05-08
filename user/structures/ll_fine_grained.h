@@ -28,7 +28,7 @@ typedef struct
     int (*compare)(void *adata, void *bdata);
 } ll_fine;
 
-void ll_fine_init(ll_fine *l, int (*compare)(ll_fine_node *a, ll_fine_node *b));
+void ll_fine_init(ll_fine *l, int (*compare)(void *a, void *b));
 
 void ll_fine_insert(ll_fine *l, ll_fine_node *node, void *data);
 

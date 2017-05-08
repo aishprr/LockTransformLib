@@ -23,7 +23,7 @@ OBJS=$(rtmfile) $(spinfile) $(qvolfile) $(qflushfile)\
 			$(mcsfile) $(hlefile) $(USERINC)/ll_fine_grained.o \
 			$(USERINC)/ll_coarse_grained.o
 
-TESTS=$(TESTDIR)/test_small \
+TESTS=$(TESTDIR)/test_small $(TESTDIR)/test_ll\
 
 # M=rtm | M=spin | M=qvol | M=qflush | M=mcs | m=hle
 rtm = $(if $(filter ${M},rtm),MUTEX_TRANSACTION_RTM, )
