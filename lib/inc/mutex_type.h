@@ -6,7 +6,7 @@
 // extern "C" {
 // #endif
 
-#define MUTEX_TRANSACTION_RTM (1)
+//#define MUTEX_TRANSACTION_RTM (1)
 
 typedef struct mutex {
 

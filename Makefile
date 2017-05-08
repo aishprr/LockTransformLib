@@ -16,6 +16,9 @@ PRES_OBJS=$()
 			
 TESTS=$(TESTDIR)/test1
 
+mutex = $(if $(filter ${M},rtm),MUTEX_TRANSACTION_RTM, )
+
+
 #HEADERS=$(INC)/mcs_hybrid_lock.h $(INC)/mcs_queue_lock.h $(INC)/mcs_ticket_lock.h $(INC)/tts_lock.h
 # first clean, then the object files and then the tests
 all: clean $(OBJS) $(TESTS)
@@ -30,7 +33,7 @@ includes = $(wildcard $(INC)/*.h)
 	$(CXX) $< $(CXXFLAGS) -c -o $@
 
 %.o: %.c
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -D $(mutex) -c -o $@ $<
 
 %.o: %.S
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
