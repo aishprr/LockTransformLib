@@ -1,6 +1,7 @@
 ROOT=$(shell pwd)
 INC=$(ROOT)/lib/inc
 MUTEXDIR=$(ROOT)/lib/mutex
+USERINC=$(ROOT)/user/structures
 TESTDIR=$(ROOT)/user/tests
 
 CXX=g++
@@ -19,9 +20,9 @@ DEL_OBJS=$(MUTEXDIR)/mutex_transaction_rtm.o $(MUTEXDIR)/mutex_spin.o\
 
 
 OBJS=$(rtmfile) $(spinfile) $(qvolfile) $(qflushfile)\
-			$(mcsfile) $(hlefile)\
+			$(mcsfile) $(hlefile) $(USERINC)/ll_fine_grained.o \
 
-TESTS=$(TESTDIR)/test_small
+TESTS=$(TESTDIR)/test_small \
 
 # M=rtm | M=spin | M=qvol | M=qflush | M=mcs | m=hle
 rtm = $(if $(filter ${M},rtm),MUTEX_TRANSACTION_RTM, )

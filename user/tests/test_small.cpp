@@ -1,10 +1,12 @@
 #include "../../lib/mutex/mutex_type.h"
+#include "../structures/ll_fine_grained.h"
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstddef>
 #include <sched.h>
+
 
 #define PARALLEL_ADDS (100)
 

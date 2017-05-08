@@ -6,7 +6,8 @@
  *  @bug No known bugs
  *
  */
-#include <ll.h>
+#include "ll_fine_grained.h"
+#include "../../lib/inc/mutex_type.h"
 #include <stdlib.h>
 
 /** @brief Initialize the linked list
@@ -14,11 +15,11 @@
  *  @param ll Pointer to the linked list to be initialized
  *  @return Void.
  */
-void ll_init(ll *l)
+void ll_fine_init(ll_fine *l, int (*compare)(void *adata, void *bdata))
 {
-    l->
+    l->compare = compare;
+    mutex_create(&(l->m));
     l->head = NULL;
-    l->tail = NULL;
 }
 
 /** @brief Return the data contained in a node
@@ -26,9 +27,12 @@ void ll_init(ll *l)
  *  @param node Pointer to the node whose data is to be retreived
  *  @return Pointer to the data.
  */
-void *ll_data(ll_node *node)
+void *ll_fine_data(ll_fine_node *node)
 {
-    return node->data;
+    mutex_lock(&(node->m));
+    void *data = node->data;
+    mutex_unlock(&(node->m));
+    return data;
 }
 
 /** @brief Enqueue a node given a pointer to it, the linked list and the
@@ -39,26 +43,56 @@ void *ll_data(ll_node *node)
  *  @param data Pointer to the data to be a part of the node
  *  @return Void.
  */
-void ll_enqueue(ll *l, ll_node *node, void *data)
+void ll_fine_enqueue(ll_fine *l, ll_fine_node *node, void *data)
 {
     /* Initialize new node's data and predecessor/successor pointers */
     node->data = data;
-    node->pred = NULL;
     node->succ = NULL;
+    mutex_create(&(node->m));
+
+    mutex_lock(&(node->m));
 
     /* If list is empty, head and tail are both set to node */
-    if (ll_empty(l)) {
+    if (ll_fine_empty(l)) {
         l->head = node;
-        l->tail = node;
+        mutex_unlock(&(node->m));
     }
-    /* If list is non-empty, add node to tail */
+    /* If list is non-empty, add node to the right position */
     else {
-        /* New node's predecessor is current tail */
-        node->pred = l->tail;
-        /* Current tail's successor is new node */
-        l->tail->succ = node;
-        /* Tail is set to new node */
-        l->tail = node;
+        // head is locked right now
+        ll_fine_node *pres = l->head;
+        mutex_lock(&(pres->m));
+        if (l->compare(node->data, pres->data) <= 0) {
+            // means it has to be put in front of the first element
+            node->succ = pres;
+            l->head = node;
+            mutex_unlock(&node->m));
+            mutex_unlock(&(pres->m));
+            return;
+        }
+        mutex_unlock(&node->m));
+        while(ll_fine_next(pres)) {
+            // pres lock is held right now
+            ll_fine_node *next = pres->succ;
+            // pres and next locks are held right now
+            mutex_lock(&(next->m));
+            if (l->compare(node->data, next->data) <= 0) {
+                node->succ = next;
+                pres->succ = node;
+                mutex_unlock(&(pres->m));
+                mutex_unlock(&(next->m));
+                return;
+            }
+            mutex_unlock(&(pres->m));
+            pres = next;
+        }
+
+        // we didn't find it until the end
+        // the only thing locked is now the last node
+        // the only lock still held is the last node
+        pres->succ = node;
+        node->succ = NULL;
+        mutex_unlock(&(pres->m));
     }
 }
 
@@ -67,10 +101,10 @@ void ll_enqueue(ll *l, ll_node *node, void *data)
  *  @param ll Pointer to the linked list
  *  @return Pointer to the dequeued node
  */
-ll_node *ll_dequeue(ll *l)
+ll_fine_node *ll_fine_dequeue(ll_fine *l)
 {
     /* Store pointer to current head in old_head */
-    ll_node *old_head = l->head;
+    ll_fine_node *old_head = l->head;
 
     /* If list has 0 or 1 node... */
     if (l->head == l->tail) {
@@ -94,7 +128,7 @@ ll_node *ll_dequeue(ll *l)
  *  @param node Pointer to the node to be deleted
  *  @return Void.
  */
-void ll_delete(ll *l, ll_node *node)
+void ll_fine_delete(ll_fine *l, ll_fine_node *node)
 {
     if (node == l->head) {
         ll_dequeue(l);
@@ -119,7 +153,8 @@ void ll_delete(ll *l, ll_node *node)
  *  @param ll Pointer to the linked list
  *  @return Pointer to the head node
  */
-ll_node *ll_head(ll *l)
+ // hold locks outside
+ll_fine_node *ll_fine_head(ll_fine *l)
 {
     return l->head;
 }
@@ -129,7 +164,8 @@ ll_node *ll_head(ll *l)
  *  @param node Pointer to the node
  *  @return Pointer to the next node
  */
-ll_node *ll_next(ll_node *node)
+ // hold locks outside
+ll_fine_node *ll_fine_next(ll_fine_node *node)
 {
     return node->succ;
 }
@@ -140,7 +176,8 @@ ll_node *ll_next(ll_node *node)
  *  @return True if the linked list is empty and false
  *          otherwise.
  */
-bool ll_empty(ll *l)
+ // Hold locks outside
+bool ll_fine_empty(ll_fine *l)
 {
     return !l->head;
 }
