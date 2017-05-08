@@ -6,7 +6,7 @@
 #include <cstddef>
 #include <sched.h>
 
-#define PARALLEL_ADDS (100)
+#define PARALLEL_ADDS (1)
 
 int matrix_multiply()
 {

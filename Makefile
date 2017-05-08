@@ -10,7 +10,7 @@ CXXFLAGS=-I$(INC) -O1 -Wall -mrtm -fopenmp -DRUN_MIC -offload-attribute-target=m
 ###CFLAGS=-c -fpic -Wall -m64 -O3 -openmp -offload-attribute-target=mic -DRUN_MIC
 ###INCFLAGS=-I$(INC)
 
-OBJS=$(MUTEXDIR)/mutex_transaction_1.o\
+OBJS=$(MUTEXDIR)/mutex_transaction_hle.o\
 
 PRES_OBJS=$()
 			

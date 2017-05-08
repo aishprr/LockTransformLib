@@ -7,7 +7,7 @@
 // #endif
 
 //#define MUTEX_SPIN (1)
-#define MUTEX_TRANSACTION_1 (1)
+#define MUTEX_TRANSACTION_HLE (1)
 
 typedef struct mutex {
 
@@ -25,8 +25,11 @@ typedef struct mutex {
 #endif
 #ifdef MUTEX_MCS_TICKET
 #endif
-#ifdef MUTEX_TRANSACTION_1
-  int trans_status;
+#ifdef MUTEX_TRANSACTION_RTM
+  int lock;
+#endif
+#ifdef MUTEX_TRANSACTION_HLE
+  unsigned int lock;
 
 #endif
 
