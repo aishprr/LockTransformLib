@@ -10,7 +10,7 @@
 
 #define OUT_STRING "Final time taken"
 
-#define PARALLEL_ADDS (15)
+#define PARALLEL_ADDS (100)
 
 int compare_int(void *adata, void *bdata) {
   return ((long)(adata) - (long)(bdata));
@@ -18,7 +18,7 @@ int compare_int(void *adata, void *bdata) {
 
 int main() {
 
-  double tim = TIME_IN;
+  double startTime = CycleTimer::currentSeconds();
   ll_fine l;
   ll_fine_init(&l, compare_int);
 
@@ -28,7 +28,9 @@ int main() {
     ll_fine_node *node = (ll_fine_node *)malloc(sizeof(ll_fine_node));
     ll_fine_insert(&l, node, (void *)(0));
   }
-  printf("SUP\n");
-  TIME_OUT(tim, OUT_STRING);
-
+  int a = ll_fine_count_elems(&l);
+  printf("Total nodes = %d\n", a);
+  double endTime = CycleTimer::currentSeconds();
+  double timeTaken = endTime - startTime;
+  printf("Total: Time = %f\n", timeTaken);
 }

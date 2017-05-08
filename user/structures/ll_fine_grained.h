@@ -34,6 +34,8 @@ void ll_fine_insert(ll_fine *l, ll_fine_node *node, void *data);
 
 void *ll_fine_data(ll_fine_node *node);
 
+int ll_fine_count_elems(ll_fine *l);
+
 ll_fine_node *ll_fine_delete(ll_fine *l, void *data);
 
 ll_fine_node *ll_fine_head(ll_fine *l);

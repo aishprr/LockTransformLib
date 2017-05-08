@@ -165,6 +165,26 @@ ll_fine_node *ll_fine_next(ll_fine_node *node)
     return node->succ;
 }
 
+/** NOT THREAD SAFE -- just for checking purposes */
+int ll_fine_count_elems(ll_fine *l) {
+    if (ll_fine_empty(l)) {
+        return 0;
+    } else {
+        ll_fine_node *pres = l->head;
+        int num = 1;
+        while(ll_fine_next(pres)) {
+            // pres lock is held right now
+            ll_fine_node *next = pres->succ;
+            pres = next;
+            // pres and next locks are held righ  
+            num++;  
+        }
+        return num;
+    }
+    
+}
+
+
 /** @brief Checks if the linked list is empty
  *
  *  @param ll Pointer to the linked list
