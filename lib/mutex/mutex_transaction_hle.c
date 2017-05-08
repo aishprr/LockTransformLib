@@ -28,8 +28,6 @@ int mutex_create(mutex_t *m)
 void mutex_lock(mutex_t *m)
 {
   while ((int)__hle_acquire_sub_fetch4((unsigned *)(m->lock), 1) < 0) {
-    do
-      asm volatile("pause":::"memory");
     while ((m->lock)!= 1);
   }
 }

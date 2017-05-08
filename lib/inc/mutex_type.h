@@ -6,8 +6,7 @@
 // extern "C" {
 // #endif
 
-//#define MUTEX_SPIN (1)
-#define MUTEX_TRANSACTION_HLE (1)
+#define MUTEX_TRANSACTION_RTM (1)
 
 typedef struct mutex {
 
@@ -30,7 +29,6 @@ typedef struct mutex {
 #endif
 #ifdef MUTEX_TRANSACTION_HLE
   unsigned int lock;
-
 #endif
 
 } mutex_t;

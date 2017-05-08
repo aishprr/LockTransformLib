@@ -17,7 +17,6 @@ void __attribute__((noinline, weak)) trace_abort(unsigned status) {}
 int mutex_create(mutex_t *m)
 {
   m->lock = UNLOCKED;
-  m->trans_status = _XABORT_EXPLICIT;
   return SUCCESS_RETVAL; 
 }
 
@@ -29,12 +28,12 @@ static inline int lock_is_free(mutex_t *m)
 void mutex_lock(mutex_t *m)
 {
   unsigned i;
-  unsigned status = ~0;
+  unsigned status = 0;
   unsigned retry = RETRY_OTHER;
 
   for (i = 0; i < retry; i++) {
+    printf("abotu to xbegin\n");
     if ((status = _xbegin()) == _XBEGIN_STARTED) {
-      printf("YAS XBEGIN STARTED!!\n");
       // now if the lock is free, that means that 
       // no one is holding a lock, so we're good to go 
       // on the transaction
