@@ -21,9 +21,9 @@ void mutex_lock(mutex_t *m)
 #ifdef PROP_BACKOFF_LOOP
 #endif
 #ifdef EXP_BACKOFF_LOOP
-
 #endif
 #ifdef YIELD_LOOP
+
     sched_yield();
 #endif
 

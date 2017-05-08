@@ -6,11 +6,7 @@ TESTDIR=$(ROOT)/user/tests
 CXX=g++
 CXXFLAGS=-I$(INC) -O1 -Wall -mrtm -fopenmp -DRUN_MIC -offload-attribute-target=mic
 
-###CPPFLAGS=-std=c++11 -fpic -m64 -O3 -Wall -openmp -offload-attribute-target=mic -DRUN_MIC
-###CFLAGS=-c -fpic -Wall -m64 -O3 -openmp -offload-attribute-target=mic -DRUN_MIC
-###INCFLAGS=-I$(INC)
-
-OBJS=$(MUTEXDIR)/mutex_transaction_rtm.o\
+OBJS=$(MUTEXDIR)/mutex_queue_vol.o\
 
 PRES_OBJS=$()
 			
@@ -23,7 +19,10 @@ qflush = $(if $(filter ${M},qflush),MUTEX_QUEUE_FLUSH, )
 mcs = $(if $(filter ${M},mcs),MUTEX_MCS_TICKET, )
 hle = $(if $(filter ${M},mcs),MUTEX_TRANSACTION_HLE, )
 
-#HEADERS=$(INC)/mcs_hybrid_lock.h $(INC)/mcs_queue_lock.h $(INC)/mcs_ticket_lock.h $(INC)/tts_lock.h
+myield = $(if $(filter ${ML},myield),-D YIELD_LOOP, )
+mprop = $(if $(filter ${ML},mprop),-D PROP_BACKOFF_LOOP, )
+mexp = $(if $(filter ${ML},mexp),-D EXP_BACKOFF_LOOP, )
+
 # first clean, then the object files and then the tests
 all: clean $(OBJS) $(TESTS)
 
@@ -37,7 +36,8 @@ includes = $(wildcard $(INC)/*.h)
 	$(CXX) $< $(CXXFLAGS) -c -o $@
 
 %.o: %.c
-	$(CXX) $(CXXFLAGS) -D $(rtm) $(spin) $(qvol) $(qflush) $(mcs) $(hle) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -D $(rtm) $(spin) $(qvol) $(qflush) $(mcs) $(hle) \
+	$(myield) $(mprop) $(mexp) -c -o $@ $<
 
 %.o: %.S
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
