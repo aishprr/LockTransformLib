@@ -30,13 +30,11 @@ typedef struct
 
 void ll_fine_init(ll_fine *l, int (*compare)(ll_fine_node *a, ll_fine_node *b));
 
-void ll_fine_enqueue(ll_fine *l, ll_fine_node *node, void *data);
+void ll_fine_insert(ll_fine *l, ll_fine_node *node, void *data);
 
 void *ll_fine_data(ll_fine_node *node);
 
-ll_fine_node *ll_fine_dequeue(ll_fine *l);
-
-void ll_fine_delete(ll_fine *l, ll_fine_node *node);
+ll_fine_node *ll_fine_delete(ll_fine *l, void *data);
 
 ll_fine_node *ll_fine_head(ll_fine *l);
 

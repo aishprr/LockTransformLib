@@ -43,34 +43,34 @@ void *ll_fine_data(ll_fine_node *node)
  *  @param data Pointer to the data to be a part of the node
  *  @return Void.
  */
-void ll_fine_enqueue(ll_fine *l, ll_fine_node *node, void *data)
+void ll_fine_insert(ll_fine *l, ll_fine_node *node, void *data)
 {
     /* Initialize new node's data and predecessor/successor pointers */
     node->data = data;
     node->succ = NULL;
     mutex_create(&(node->m));
 
-    mutex_lock(&(node->m));
+    mutex_lock(&(l->m));
 
     /* If list is empty, head and tail are both set to node */
     if (ll_fine_empty(l)) {
         l->head = node;
-        mutex_unlock(&(node->m));
+        mutex_unlock(&(l->m));
     }
     /* If list is non-empty, add node to the right position */
     else {
-        // head is locked right now
-        ll_fine_node *pres = l->head;
+        // l is locked right now
+        ll_fine_node *pres = ll_fine_head(l);
         mutex_lock(&(pres->m));
         if (l->compare(node->data, pres->data) <= 0) {
             // means it has to be put in front of the first element
             node->succ = pres;
             l->head = node;
-            mutex_unlock(&node->m));
+            mutex_unlock(&(l->m));
             mutex_unlock(&(pres->m));
             return;
         }
-        mutex_unlock(&node->m));
+        mutex_unlock(&(l->m));
         while(ll_fine_next(pres)) {
             // pres lock is held right now
             ll_fine_node *next = pres->succ;
@@ -96,55 +96,57 @@ void ll_fine_enqueue(ll_fine *l, ll_fine_node *node, void *data)
     }
 }
 
-/** @brief Dequeue a node given a pointer to the linked list
- *
- *  @param ll Pointer to the linked list
- *  @return Pointer to the dequeued node
- */
-ll_fine_node *ll_fine_dequeue(ll_fine *l)
-{
-    /* Store pointer to current head in old_head */
-    ll_fine_node *old_head = l->head;
-
-    /* If list has 0 or 1 node... */
-    if (l->head == l->tail) {
-        l->head = NULL;
-        l->tail = NULL;
-    /* Change current head to successor. We know that head has a successor
-        because we entered this clause.
-         */
-    } else {
-        l->head = l->head->succ;
-        l->head->pred = NULL;
-    }
-
-    /* Will be null if list was empty! */
-    return old_head;
-}
-
 /** @brief Delete a node from a linked list
  *
  *  @param ll Pointer to the linked list
  *  @param node Pointer to the node to be deleted
  *  @return Void.
  */
-void ll_fine_delete(ll_fine *l, ll_fine_node *node)
+ll_fine_node *ll_fine_delete(ll_fine *l, void *data)
 {
-    if (node == l->head) {
-        ll_dequeue(l);
+    ll_fine_node *del;
+    mutex_lock(&(l->m));
+    /* If list is empty, head and tail are both set to node */
+    if (ll_fine_empty(l)) {
+        del = NULL;
+        mutex_unlock(&(l->m));
+        return del;
     }
-    /* Note that if node is both head and tail, ll_dequeue() takes care of it.
-        That's why this is 'else if' */
-    else if (node == l->tail) {
-        /* Tail is now null! */
-        l->tail = l->tail->pred;
-        /* Tail's successor is n=ow null! */
-        l->tail->succ = NULL;
-    } else {
-        /* My predecessor's successor is set to my successor */
-        node->pred->succ = node->succ;
-        /* My successor's predecessor is set to my predecessor */
-        node->succ->pred = node->pred;
+    /* If list is non-empty, delete the right node */
+    else {
+        // l is locked right now
+        ll_fine_node *pres = ll_fine_head(l);
+        mutex_lock(&(pres->m));
+        if (l->compare(data, pres->data) == 0) {
+            // means it has to be put in front of the first element
+            del = pres;
+            l->head = NULL;
+            mutex_unlock(&(l->m));
+            mutex_unlock(&(pres->m));
+            return del;
+        }
+        mutex_unlock(&(l->m));
+        while(ll_fine_next(pres)) {
+            // pres lock is held right now
+            ll_fine_node *next = pres->succ;
+            // pres and next locks are held right now
+            mutex_lock(&(next->m));
+            if (l->compare(data, next->data) == 0) {
+                del = next;
+                pres->succ = next->succ;
+                mutex_unlock(&(pres->m));
+                mutex_unlock(&(next->m));
+                return del;
+            }
+            mutex_unlock(&(pres->m));
+            pres = next;
+        }
+
+        // we didn't find it until the end
+        // the only thing locked is now the last node
+        // the only lock still held is the last node
+        mutex_unlock(&(pres->m));
+        return NULL;
     }
 }
 
