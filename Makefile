@@ -21,6 +21,7 @@ DEL_OBJS=$(MUTEXDIR)/mutex_transaction_rtm.o $(MUTEXDIR)/mutex_spin.o\
 
 OBJS=$(rtmfile) $(spinfile) $(qvolfile) $(qflushfile)\
 			$(mcsfile) $(hlefile) $(USERINC)/ll_fine_grained.o \
+			$(USERINC)/ll_coarse_grained.o
 
 TESTS=$(TESTDIR)/test_small \
 

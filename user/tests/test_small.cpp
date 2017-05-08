@@ -1,5 +1,6 @@
 #include "../../lib/mutex/mutex_type.h"
 #include "../structures/ll_fine_grained.h"
+#include "../structures/ll_coarse_grained.h"
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
