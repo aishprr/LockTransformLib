@@ -5,7 +5,7 @@
 
 #define UNLOCKED (0)
 #define LOCKED (1)
-#define SPIN_LOCK_WAIT ((char *)"waiting for spin lock")
+#define LOCK_WAIT ((char *)"Spin lock wait time")
 
 int mutex_create(mutex_t *m) {
   m->lock = UNLOCKED;
@@ -15,13 +15,13 @@ int mutex_create(mutex_t *m) {
 
 void mutex_lock(mutex_t *m) {
   // spin until it's true
-  double tim = TIME_IN
+  double tim = TIME_IN;
   while (!__sync_bool_compare_and_swap(&(m->lock), UNLOCKED, LOCKED)) {
 #ifdef YIELD_LOOP
     sched_yield();
 #endif
   }
-  TIME_OUT(tim, SPIN_LOCK_WAIT);
+  TIME_OUT(tim, LOCK_WAIT);
 }
 
 void mutex_unlock(mutex_t *m) {

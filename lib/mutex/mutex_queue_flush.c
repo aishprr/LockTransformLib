@@ -2,6 +2,8 @@
 #include "../inc/common.h"
 #include <omp.h>
 
+#define LOCK_WAIT ((char *)"Qflush lock wait time")
+
 int mutex_create(mutex_t *m)
 {
   m->lock_count = 0;
@@ -13,6 +15,8 @@ int mutex_create(mutex_t *m)
 void mutex_lock(mutex_t *m)
 {
 
+  double tim = TIME_IN;
+
   int q_num = __sync_fetch_and_add(&(m->queue_count), 1);
   
   /** Continuously wait until it's me chance, but only reads,
@@ -22,6 +26,7 @@ void mutex_lock(mutex_t *m)
     #pragma omp flush
   }
   
+  TIME_OUT(tim, LOCK_WAIT);
 }
 
 void mutex_unlock(mutex_t *m)

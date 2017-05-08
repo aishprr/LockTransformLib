@@ -6,11 +6,22 @@ TESTDIR=$(ROOT)/user/tests
 CXX=g++
 CXXFLAGS=-I$(INC) -O1 -Wall -mrtm -fopenmp -DRUN_MIC -offload-attribute-target=mic
 
-OBJS=$(MUTEXDIR)/mutex_spin.o\
+rtmfile=$(if $(filter ${M},rtm),$(MUTEXDIR)/mutex_transaction_rtm.o, )
+spinfile=$(if $(filter ${M},spin),$(MUTEXDIR)/mutex_spin.o, )
+qvolfile=$(if $(filter ${M},qvol),$(MUTEXDIR)/mutex_queue_vol.o, )
+qflushfile=$(if $(filter ${M},qflush),$(MUTEXDIR)/mutex_queue_flush.o, )
+mcsfile=$(if $(filter ${M},mcs),$(MUTEXDIR)/mutex_mcs_ticket.o, )
+hlefile=$(if $(filter ${M},mcs),$(MUTEXDIR)/mutex_transaction_hle.o, )
 
-PRES_OBJS=$()
-			
-TESTS=$(TESTDIR)/test1
+DEL_OBJS=$(MUTEXDIR)/mutex_transaction_rtm.o $(MUTEXDIR)/mutex_spin.o\
+					$(MUTEXDIR)/mutex_queue_vol.o $(MUTEXDIR)/mutex_queue_flush.o\
+					$(MUTEXDIR)/mutex_mcs_ticket.o $(MUTEXDIR)/mutex_transaction_hle.o\
+
+
+OBJS=$(rtmfile) $(spinfile) $(qvolfile) $(qflushfile)\
+			$(mcsfile) $(hlefile)\
+
+TESTS=$(TESTDIR)/test_small
 
 # M=rtm | M=spin | M=qvol | M=qflush | M=mcs | m=hle
 rtm = $(if $(filter ${M},rtm),MUTEX_TRANSACTION_RTM, )
@@ -48,4 +59,4 @@ includes = $(wildcard $(INC)/*.h)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(DEL_OBJS) $(TESTS)

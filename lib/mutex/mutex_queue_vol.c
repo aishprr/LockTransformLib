@@ -2,6 +2,8 @@
 #include "../inc/common.h"
 #include <sched.h>
 
+#define LOCK_WAIT ((char *)"Qvol lock wait time")
+
 int mutex_create(mutex_t *m)
 {
   m->lock_count = 0;
@@ -12,6 +14,8 @@ int mutex_create(mutex_t *m)
 
 void mutex_lock(mutex_t *m)
 {
+
+  double tim = TIME_IN;
 
   int q_num = __sync_fetch_and_add(&(m->queue_count), 1);
   
@@ -28,6 +32,7 @@ void mutex_lock(mutex_t *m)
 #endif
 
   }
+  TIME_OUT(tim, LOCK_WAIT);
   
 }
 

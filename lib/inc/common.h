@@ -22,7 +22,7 @@ static inline double log_time_in() {
 #define TIME_IN log_time_in();
 #else
 #define TIME_OUT(startTime, logger)
-#define TIME_IN
+#define TIME_IN (2)
 #endif
 
 #endif /* _COMMON_H */
