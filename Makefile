@@ -6,7 +6,7 @@ TESTDIR=$(ROOT)/user/tests
 CXX=g++
 CXXFLAGS=-I$(INC) -O1 -Wall -mrtm -fopenmp -DRUN_MIC -offload-attribute-target=mic
 
-OBJS=$(MUTEXDIR)/mutex_queue_vol.o\
+OBJS=$(MUTEXDIR)/mutex_spin.o\
 
 PRES_OBJS=$()
 			
@@ -23,6 +23,8 @@ myield = $(if $(filter ${ML},myield),-D YIELD_LOOP, )
 mprop = $(if $(filter ${ML},mprop),-D PROP_BACKOFF_LOOP, )
 mexp = $(if $(filter ${ML},mexp),-D EXP_BACKOFF_LOOP, )
 
+time = $(if $(filter ${T},1),-D TIME, )
+
 # first clean, then the object files and then the tests
 all: clean $(OBJS) $(TESTS)
 
@@ -37,7 +39,7 @@ includes = $(wildcard $(INC)/*.h)
 
 %.o: %.c
 	$(CXX) $(CXXFLAGS) -D $(rtm) $(spin) $(qvol) $(qflush) $(mcs) $(hle) \
-	$(myield) $(mprop) $(mexp) -c -o $@ $<
+	$(myield) $(mprop) $(mexp) $(time) -c -o $@ $<
 
 %.o: %.S
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
