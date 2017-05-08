@@ -12,6 +12,7 @@ PRES_OBJS=$()
 			
 TESTS=$(TESTDIR)/test1
 
+# M=rtm | M=spin | M=qvol | M=qflush | M=mcs | m=hle
 rtm = $(if $(filter ${M},rtm),MUTEX_TRANSACTION_RTM, )
 spin = $(if $(filter ${M},spin),MUTEX_SPIN, )
 qvol = $(if $(filter ${M},qvol),MUTEX_QUEUE_VOL, )
@@ -19,10 +20,12 @@ qflush = $(if $(filter ${M},qflush),MUTEX_QUEUE_FLUSH, )
 mcs = $(if $(filter ${M},mcs),MUTEX_MCS_TICKET, )
 hle = $(if $(filter ${M},mcs),MUTEX_TRANSACTION_HLE, )
 
+# ML=myield | ML=mprop | ML=mexp
 myield = $(if $(filter ${ML},myield),-D YIELD_LOOP, )
 mprop = $(if $(filter ${ML},mprop),-D PROP_BACKOFF_LOOP, )
 mexp = $(if $(filter ${ML},mexp),-D EXP_BACKOFF_LOOP, )
 
+# T=1 or T=somethignelse
 time = $(if $(filter ${T},1),-D TIME, )
 
 # first clean, then the object files and then the tests
