@@ -5,6 +5,7 @@
 
 #define SUCCESS_RETVAL (0)
 #define FAILURE_RETVAL (-1)
+#define MAX(a,b) (a < b? (b) : (a))
 
 static inline void log_time_out(double startTime, char *logger) {
   double endTime = CycleTimer::currentSeconds();
