@@ -31,8 +31,4 @@ void mutex_lock(mutex_t *);
 void mutex_unlock(mutex_t *);
 
 
-// #ifdef __cplusplus
-// }
-// #endif
-
 #endif /* _MUTEX_TYPE_H */
