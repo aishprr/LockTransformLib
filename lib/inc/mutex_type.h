@@ -25,7 +25,7 @@ typedef struct mutex {
 #ifdef MUTEX_MCS_TICKET
 #endif
 #ifdef MUTEX_TRANSACTION_RTM
-  int lock;
+  volatile int lock;
 #endif
 #ifdef MUTEX_TRANSACTION_HLE
   unsigned int lock;

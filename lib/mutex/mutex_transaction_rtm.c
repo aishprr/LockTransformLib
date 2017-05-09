@@ -91,4 +91,5 @@ void mutex_unlock(mutex_t *m)
     _xend();
   else
     m->lock = UNLOCKED;
+  printf("done unlocking!!\n");
 }
