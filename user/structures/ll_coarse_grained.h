@@ -32,6 +32,8 @@ void ll_coarse_insert(ll_coarse *l, ll_coarse_node *node, void *data);
 
 void *ll_coarse_data(ll_coarse_node *node);
 
+int ll_coarse_count_elems(ll_coarse *l);
+
 ll_coarse_node *ll_coarse_delete(ll_coarse *l, void *data);
 
 ll_coarse_node *ll_coarse_head(ll_coarse *l);

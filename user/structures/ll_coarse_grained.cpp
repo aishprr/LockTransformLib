@@ -126,6 +126,25 @@ ll_coarse_node *ll_coarse_delete(ll_coarse *l, void *data)
     }
 }
 
+/** NOT THREAD SAFE -- just for checking purposes */
+int ll_coarse_count_elems(ll_coarse *l) {
+    if (ll_coarse_empty(l)) {
+        return 0;
+    } else {
+        ll_coarse_node *pres = l->head;
+        int num = 1;
+        while(ll_coarse_next(pres)) {
+            // pres lock is held right now
+            ll_coarse_node *next = pres->succ;
+            pres = next;
+            // pres and next locks are held righ  
+            num++;  
+        }
+        return num;
+    }
+    
+}
+
 /** @brief Return the head of the linked list
  *
  *  @param ll Pointer to the linked list
