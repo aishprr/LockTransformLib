@@ -32,11 +32,11 @@ void mutex_lock(mutex_t *m)
     // back off for time proportional to your position in queue
     // just to be safe although this should never happen ever
     wait = MAX(0, q_num - m->lock_count);
-    while(int i = 0; i < wait; i++);
+    for(int i = 0; i < wait; i++);
 #endif
 #ifdef EXP_BACKOFF_LOOP
-    while(int i = 0; i < wait; i++);
-    wait = wait * EXP_FACTOR
+    for(int i = 0; i < wait; i++);
+    wait = wait * EXP_FACTOR;
 #endif
 #ifdef YIELD_LOOP
     sched_yield();
