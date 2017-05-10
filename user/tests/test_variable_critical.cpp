@@ -1,4 +1,5 @@
 #include "../../lib/mutex/mutex_type.h"
+#include "../../lib/inc/common.h"
 #include "../structures/ll_fine_grained.h"
 #include "../structures/ll_coarse_grained.h"
 #include <omp.h>
@@ -7,8 +8,9 @@
 #include <stdio.h>
 #include <cstddef>
 #include <sched.h>
+#include <unistd.h>
 
-int main() {
+int main(int argc, char *argv[]) {
 
   mutex_t mu;
   mutex_create(&mu);
@@ -61,12 +63,13 @@ int main() {
   
     printf("thread number inside %d\n", tid);
 #ifdef USE_OMP_CRIT
-    #pragma omp critical {
-#elif
+    #pragma omp critical
+    {
+#else
     mutex_lock(&mu);
 #endif
     i++;
-    while(int k = 0; k < fin_crit; k++) {
+    for(int k = 0; k < fin_crit; k++) {
       if(operate) {
         // just operate on i multiple times in the same loop
         i++;
@@ -74,7 +77,7 @@ int main() {
     }
 #ifdef USE_OMP_CRIT
     }
-#elif
+#else
     mutex_unlock(&mu);
 #endif
   }

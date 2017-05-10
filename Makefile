@@ -42,6 +42,9 @@ mexp = $(if $(filter ${ML},mexp),-D EXP_BACKOFF_LOOP, )
 # T=1 or T=somethignelse
 time = $(if $(filter ${T},1),-D TIME, )
 
+#test for omp critical section usage
+ompcrit = $(if $(filter ${O},1),-D USE_OMP_CRIT, )
+
 # first clean, then the object files and then the tests
 all: clean $(OBJS) $(TESTS)
 
@@ -49,7 +52,7 @@ includes = $(wildcard $(INC)/*.h)
 
 
 %: %.cpp ${includes} $(OBJS)
-	$(CXX) $(CXXFLAGS) -std=c++11 $(OBJS) $< -o $@
+	$(CXX) $(CXXFLAGS) $(ompcrit) -std=c++11 $(OBJS) $< -o $@
 
 %.o: %.cpp
 	$(CXX) $< $(CXXFLAGS) -c -o $@
