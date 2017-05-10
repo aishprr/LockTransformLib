@@ -32,7 +32,8 @@ void mutex_lock(mutex_t *m)
   unsigned retry = RETRY_OTHER;
 
   for (i = 0; i < retry; i++) {
-    printf("abotu to xbegin\n");
+
+    dbg_printf("abotu to xbegin\n");
     if ((status = _xbegin()) == _XBEGIN_STARTED) {
       // now if the lock is free, that means that 
       // no one is holding a lock, so we're good to go 
@@ -51,7 +52,7 @@ void mutex_lock(mutex_t *m)
       // thing is being used presently
       _xabort(0xff);
     }
-    printf("OOPS didnt work out!! status = %d %u\n", status, status);
+    dbg_printf("OOPS didnt work out!! status = %d %u\n", status, status);
     trace_abort(status);
     if ((status & _XABORT_EXPLICIT) && _XABORT_CODE(status) == 0xff) {
       while (!lock_is_free(m));
@@ -88,5 +89,5 @@ void mutex_unlock(mutex_t *m)
     _xend();
   else
     m->lock = UNLOCKED;
-  printf("done unlocking!!\n");
+  dbg_printf("done unlocking!!\n");
 }

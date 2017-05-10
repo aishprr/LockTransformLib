@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   int def_crit = 0;
   int operate = 0;
   char opt;
-  printf("argc = %d\n", argc);
+  //printf("argc = %d\n", argc);
 
   // p is for the how many parallel threads to run this on
   // c is how many loops to wait for inside critical section
@@ -32,15 +32,15 @@ int main(int argc, char *argv[]) {
   while ((opt = getopt(argc, argv, "p:c:o")) != -1) {
     switch (opt) {
       case 'p': 
-          printf("pvalue = %s\n", optarg);
+          dbg_printf("pvalue = %s\n", optarg);
           in_par = atoi(optarg);
           break;
       case 'c': 
-          printf("cvalue = %s\n", optarg);
+          dbg_printf("cvalue = %s\n", optarg);
           in_crit = atoi(optarg);
           break;
       case 'o': 
-          printf("o flag passed\n");
+          dbg_printf("o flag passed\n");
           operate = 1;
           break;
       default:
@@ -51,17 +51,20 @@ int main(int argc, char *argv[]) {
 
   int fin_par = MAX(in_par, def_par);
   int fin_crit = MAX(in_crit, def_crit);
-  printf("fin par = %d, fin crit = %d\n", fin_par, fin_crit);
+  
+#ifdef TOT_TIME
+  double startTime = CycleTimer::currentSeconds();
+#endif
 
   int i = 0;
   #pragma omp parallel for num_threads(fin_par)
   for(int u = 0; u < fin_par; u++)
   {
-    int tid = omp_get_thread_num();
-    int cpu_num = sched_getcpu();
-    printf("thread %d on CPU %d\n", tid, cpu_num);
+    //int tid = omp_get_thread_num();
+    //int cpu_num = sched_getcpu();
+    //printf("thread %d on CPU %d\n", tid, cpu_num);
   
-    printf("thread number inside %d\n", tid);
+    //printf("thread number inside %d\n", tid);
 #ifdef USE_OMP_CRIT
     #pragma omp critical
     {
@@ -82,7 +85,11 @@ int main(int argc, char *argv[]) {
 #endif
   }
 
-  printf("i = %d\n", i);
-
+#ifdef TOT_TIME
+  double endTime = CycleTimer::currentSeconds();
+  double timeTaken = endTime - startTime;
+  printf("%f\n", timeTaken);
+#endif
+  //printf("i = %d\n", i);
   return 1;
 }

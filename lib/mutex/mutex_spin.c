@@ -29,8 +29,8 @@ void mutex_lock(mutex_t *m) {
     // not sure how long to back off for here
 #endif
 #ifdef EXP_BACKOFF_LOOP
-    while(int i = 0; i < wait; i++);
-    wait = wait * EXP_FACTOR
+    for(int i = 0; i < wait; i++);
+    wait = wait * EXP_FACTOR;
 #endif
   }
   TIME_OUT(tim, LOCK_WAIT);

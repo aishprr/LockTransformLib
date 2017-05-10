@@ -7,6 +7,13 @@
 #define FAILURE_RETVAL (-1)
 #define MAX(a,b) (a < b? (b) : (a))
 
+#ifdef DEBUG
+#define dbg_printf(...) printf(__VA_ARGS__)
+#else
+#define dbg_printf(...)
+#endif
+
+
 static inline void log_time_out(double startTime, char *logger) {
   double endTime = CycleTimer::currentSeconds();
   double timeTaken = endTime - startTime;
