@@ -1,5 +1,4 @@
 *.o
-logs_*
 test_variable_critical
 test_small_critical
 test_ll_fine

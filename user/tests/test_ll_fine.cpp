@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #define OUT_STRING "Final time taken"
+#define HYPERTHREADS (16)
 
 int compare_int(void *adata, void *bdata) {
   return ((long)(adata) - (long)(bdata));
@@ -24,12 +25,12 @@ int main(int argc, char *argv[]) {
   int in_par = 0;
   int def_par = 1;
   char opt;
-  printf("argc = %d\n", argc);
+  dbg_printf("argc = %d\n", argc);
 
   while ((opt = getopt(argc, argv, "p:")) != -1) {
     switch (opt) {
       case 'p': 
-          printf("value = %s\n", optarg);
+          dbg_printf("value = %s\n", optarg);
           in_par = atoi(optarg);
           break;
       default:
@@ -38,20 +39,27 @@ int main(int argc, char *argv[]) {
       }
   }
 
-  int fin_par = MAX(in_par, def_par);
-  printf("fin par = %d\n", fin_par);
+  int fin_par = HYPERTHREADS * MAX(in_par, def_par);
+  dbg_printf("fin par = %d\n", fin_par);
 
+#ifdef TOT_TIME
   double startTime = CycleTimer::currentSeconds();
+#endif
 
-  #pragma omp parallel for num_threads(fin_par)
+  #pragma omp parallel for schedule(static,1)
   for(int u = 0; u < fin_par; u++)
   {
     ll_fine_node *node = (ll_fine_node *)malloc(sizeof(ll_fine_node));
     ll_fine_insert(&l, node, (void *)(0));
   }
-  int a = ll_fine_count_elems(&l);
-  printf("Total nodes = %d\n", a);
+#ifdef TOT_TIME
   double endTime = CycleTimer::currentSeconds();
   double timeTaken = endTime - startTime;
-  printf("Total: Time = %f\n", timeTaken);
+  printf("%f\n", timeTaken);
+#endif
+  int a = ll_fine_count_elems(&l);
+  if (a != fin_par) {
+    printf("Failed Total nodes = %d, should be %d\n", a, fin_par);
+  }
+  
 }

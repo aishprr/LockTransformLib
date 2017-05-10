@@ -3,7 +3,7 @@
 #first the variable load test
 make clean
 extend=$(date +"%M_%H_%d")
-mkdir logs_${extend}
+mkdir logs_${extend}_threadvar
 ORIG_PWD=$(pwd)
 
 #### MUTEX_RTM ####
