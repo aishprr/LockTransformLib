@@ -7,6 +7,8 @@
 #define FAILURE_RETVAL (-1)
 #define MAX(a,b) (a < b? (b) : (a))
 
+//#define DEBUG
+
 #ifdef DEBUG
 #define dbg_printf(...) printf(__VA_ARGS__)
 #else

@@ -77,17 +77,19 @@ void mutex_lock(mutex_t *m)
   }
   /* Could do adaptation here */
 
-  while (!__sync_bool_compare_and_swap(&(m->lock), UNLOCKED, LOCKED)) {
-    while (!lock_is_free(m));
+  while (!__sync_bool_compare_and_swap(&(m->lock), UNLOCKED, LOCKED));// {
+    //while (!lock_is_free(m));
     /* Could do respeculation here */
-  }
+  //}
 }
 
 void mutex_unlock(mutex_t *m)
 {
-  if (lock_is_free(m))
+  if (lock_is_free(m)) {
     _xend();
-  else
+  }
+  else {
     m->lock = UNLOCKED;
+  }
   dbg_printf("done unlocking!!\n");
 }

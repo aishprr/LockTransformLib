@@ -65,6 +65,7 @@ void ll_coarse_insert(ll_coarse *l, ll_coarse_node *node, void *data)
             if (l->compare(node->data, next->data) <= 0) {
                 node->succ = next;
                 pres->succ = node;
+                mutex_unlock(&(l->m));
                 return;
             }
             pres = next;
@@ -113,6 +114,7 @@ ll_coarse_node *ll_coarse_delete(ll_coarse *l, void *data)
             if (l->compare(data, next->data) == 0) {
                 del = next;
                 pres->succ = next->succ;
+                mutex_unlock(&(l->m));
                 return del;
             }
             pres = next;
