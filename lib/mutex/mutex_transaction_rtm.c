@@ -3,7 +3,7 @@
 #include <immintrin.h>
 #include <stdio.h>
 
-// CITATION: help from https://github.com/andikleen/tsx-tools
+// CITATION: guidance from https://github.com/andikleen/tsx-tools
 // https://clang.llvm.org/doxygen/rtmintrin_8h.html
 
 #define RETRY_CON (3)
@@ -67,7 +67,6 @@ void mutex_lock(mutex_t *m)
       retry = RETRY_CON;
       while (!lock_is_free(m));
       // There was a conflict, so now try again with the transactions
-        //pause();
       /* Could do various kinds of backoff here. */
     } else if (status & _XABORT_CAPACITY) {
       retry = RETRY_CAP;
@@ -78,8 +77,6 @@ void mutex_lock(mutex_t *m)
   /* Could do adaptation here */
 
   while (!__sync_bool_compare_and_swap(&(m->lock), UNLOCKED, LOCKED)) {
-    //do
-    //  pause();
     while (!lock_is_free(m));
     /* Could do respeculation here */
   }

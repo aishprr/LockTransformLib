@@ -2,6 +2,7 @@
 #define _MUTEX_TYPE_H
 
 #define MUTEX_SPIN 1
+#define EXP_FACTOR (2)
 
 typedef struct mutex {
 

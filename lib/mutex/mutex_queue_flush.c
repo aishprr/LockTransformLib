@@ -18,11 +18,28 @@ void mutex_lock(mutex_t *m)
   double tim = TIME_IN;
 
   int q_num = __sync_fetch_and_add(&(m->queue_count), 1);
+
+#if defined(PROP_BACKOFF_LOOP) || defined(EXP_BACKOFF_LOOP)
+  int wait = 1;
+#endif
   
   /** Continuously wait until it's me chance, but only reads,
       no invalidations */
   while(m->lock_count != q_num)
   {
+#ifdef PROP_BACKOFF_LOOP
+    // back off for time proportional to your position in queue
+    // just to be safe although this should never happen ever
+    wait = MAX(0, q_num - m->lock_count);
+    while(int i = 0; i < wait; i++);
+#endif
+#ifdef EXP_BACKOFF_LOOP
+    while(int i = 0; i < wait; i++);
+    wait = wait * EXP_FACTOR
+#endif
+#ifdef YIELD_LOOP
+    sched_yield();
+#endif
     #pragma omp flush
   }
   
