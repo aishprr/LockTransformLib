@@ -57,12 +57,12 @@ int main(int argc, char *argv[]) {
 #endif
 
   int i = 0;
-  #pragma omp parallel for num_threads(fin_par)
+  #pragma omp parallel for schedule(static,1)
   for(int u = 0; u < fin_par; u++)
   {
-    //int tid = omp_get_thread_num();
-    //int cpu_num = sched_getcpu();
-    //printf("thread %d on CPU %d\n", tid, cpu_num);
+    int tid = omp_get_thread_num();
+    int cpu_num = sched_getcpu();
+    printf("thread %d on CPU %d\n", tid, cpu_num);
   
     //printf("thread number inside %d\n", tid);
 #ifdef USE_OMP_CRIT
