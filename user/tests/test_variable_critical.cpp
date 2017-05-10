@@ -10,6 +10,8 @@
 #include <sched.h>
 #include <unistd.h>
 
+#define HYPERTHREADS (16)
+
 int main(int argc, char *argv[]) {
 
   mutex_t mu;
@@ -49,7 +51,7 @@ int main(int argc, char *argv[]) {
       }
   }
 
-  int fin_par = MAX(in_par, def_par);
+  int fin_par = MAX(in_par, def_par) * HYPERTHREADS;
   int fin_crit = MAX(in_crit, def_crit);
   
 #ifdef TOT_TIME
@@ -60,9 +62,9 @@ int main(int argc, char *argv[]) {
   #pragma omp parallel for schedule(static,1)
   for(int u = 0; u < fin_par; u++)
   {
-    int tid = omp_get_thread_num();
-    int cpu_num = sched_getcpu();
-    printf("thread %d on CPU %d\n", tid, cpu_num);
+    // int tid = omp_get_thread_num();
+    // int cpu_num = sched_getcpu();
+    // printf("thread %d on CPU %d\n", tid, cpu_num);
   
     //printf("thread number inside %d\n", tid);
 #ifdef USE_OMP_CRIT

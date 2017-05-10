@@ -16,7 +16,7 @@ echo "#### RTM [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/rtm_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/rtm_tot_threadvar.txt
@@ -26,7 +26,7 @@ echo "#### RTM [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/rtm_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/rtm_tot_threadvar.txt
@@ -36,7 +36,7 @@ echo "#### RTM [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/rtm_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/rtm_tot_threadvar.txt
@@ -52,7 +52,7 @@ echo "#### Spin *always* [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/spin_alw_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/spin_alw_tot_threadvar.txt
@@ -62,7 +62,7 @@ echo "#### Spin *always* [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/spin_alw_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/spin_alw_tot_threadvar.txt
@@ -72,7 +72,7 @@ echo "#### Spin *always* [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/spin_alw_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}/spin_alw_tot_threadvar.txt
@@ -88,7 +88,7 @@ echo "#### Spin *yield* [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/spin_yield_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/spin_yield_tot_threadvar.txt
@@ -98,7 +98,7 @@ echo "#### Spin *yield* [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/spin_yield_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/spin_yield_tot_threadvar.txt
@@ -108,7 +108,7 @@ echo "#### Spin *yield* [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/spin_yield_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}/spin_yield_tot_threadvar.txt
@@ -124,7 +124,7 @@ echo "#### Spin *exp* [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/spin_exp_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/spin_exp_tot_threadvar.txt
@@ -134,7 +134,7 @@ echo "#### Spin *exp* [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/spin_exp_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/spin_exp_tot_threadvar.txt
@@ -144,7 +144,7 @@ echo "#### Spin *exp* [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/spin_exp_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}/spin_exp_tot_threadvar.txt
@@ -160,7 +160,7 @@ echo "#### qvol *always* [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_alw_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/qvol_alw_tot_threadvar.txt
@@ -170,7 +170,7 @@ echo "#### qvol *always* [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_alw_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/qvol_alw_tot_threadvar.txt
@@ -180,7 +180,7 @@ echo "#### qvol *always* [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_alw_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}/qvol_alw_tot_threadvar.txt
@@ -196,7 +196,7 @@ echo "#### qvol *yield* [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_yield_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/qvol_yield_tot_threadvar.txt
@@ -206,7 +206,7 @@ echo "#### qvol *yield* [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_yield_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/qvol_yield_tot_threadvar.txt
@@ -216,7 +216,7 @@ echo "#### qvol *yield* [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_yield_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}/qvol_yield_tot_threadvar.txt
@@ -232,7 +232,7 @@ echo "#### qvol *exp* [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_exp_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/qvol_exp_tot_threadvar.txt
@@ -242,7 +242,7 @@ echo "#### qvol *exp* [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_exp_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/qvol_exp_tot_threadvar.txt
@@ -252,7 +252,7 @@ echo "#### qvol *exp* [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_exp_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}/qvol_exp_tot_threadvar.txt
@@ -264,31 +264,31 @@ make M=qvol ML=mprop TT=1
 cd user/tests
 touch $ORIG_PWD/logs_${extend}/qvol_prop_tot_threadvar.txt
 
-echo "#### qvol *exp* [2, 100] threads, Small critical \
+echo "#### qvol *prop* [2, 100] threads, Small critical \
 ./test_variable_critical -p tcount ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_prop_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}/qvol_prop_tot_threadvar.txt
 done
 
-echo "#### qvol *exp* [2, 100] threads, Long critical less activity \
+echo "#### qvol *prop* [2, 100] threads, Long critical less activity \
 ./test_variable_critical -p tcount -c 10000 ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_prop_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}/qvol_prop_tot_threadvar.txt
 done
 
-echo "#### qvol *exp* [2, 100] threads, Long critical more activity \
+echo "#### qvol *prop* [2, 100] threads, Long critical more activity \
 ./test_variable_critical -p tcount -c 10000 -o ####" >>\
  $ORIG_PWD/logs_${extend}/qvol_prop_tot_threadvar.txt
 
-for i in {2..100}
+for i in {1..15}
 do
   # only run with the small critical section version with rtm
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}/qvol_prop_tot_threadvar.txt

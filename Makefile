@@ -5,7 +5,7 @@ USERINC=$(ROOT)/user/structures
 TESTDIR=$(ROOT)/user/tests
 
 CXX=g++
-CXXFLAGS=-I$(INC) -O1 -Wall -mrtm -fopenmp -DRUN_MIC -offload-attribute-target=mic
+CXXFLAGS=-I$(INC) -O1 -Wall -mrtm -fopenmp
 
 rtmfile=$(if $(filter ${M},rtm),$(MUTEXDIR)/mutex_transaction_rtm.o, )
 spinfile=$(if $(filter ${M},spin),$(MUTEXDIR)/mutex_spin.o, )
