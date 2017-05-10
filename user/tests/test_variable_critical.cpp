@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
   int in_par = 0;
   int def_par = 1;
   int in_crit = 0;
-  int def_crit = 1;
+  int def_crit = 0;
   int operate = 0;
   char opt;
   printf("argc = %d\n", argc);
