@@ -54,7 +54,8 @@ includes = $(wildcard $(INC)/*.h)
 
 
 %: %.cpp ${includes} $(OBJS)
-	$(CXX) $(CXXFLAGS) $(ompcrit) $(testtime) -std=c++11 $(OBJS) $< -o $@
+	$(CXX) $(CXXFLAGS) $(ompcrit) $(testtime) -D $(rtm) $(spin) $(qvol) $(qflush)\
+	$(mcs) $(hle) -std=c++11 $(OBJS) $< -o $@
 
 %.o: %.cpp
 	$(CXX) $< $(CXXFLAGS) -c -o $@

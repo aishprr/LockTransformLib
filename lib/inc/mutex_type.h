@@ -22,9 +22,9 @@ typedef struct mutex {
   int lock_count;
   int queue_count;
 #endif
-//#ifdef MUTEX_MCS_QUEUE
+#ifdef MUTEX_MCS_QUEUE
   volatile mcs_qnode *queue_end;
-//#endif
+#endif
 #ifdef MUTEX_TRANSACTION_RTM
   volatile int lock;
 #endif

@@ -294,3 +294,39 @@ do
   ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}_threadvar/qvol_prop_tot_threadvar.txt
 done
 
+
+#### omp critical section ####
+cd $ORIG_PWD
+make M=spin O=1 TT=1
+cd user/tests
+touch $ORIG_PWD/logs_${extend}_threadvar/ompcrit_tot_threadvar.txt
+
+echo "#### ompcrit [1*16, 30*16] threads, Small critical \
+./test_variable_critical -p tcount ####" >>\
+ $ORIG_PWD/logs_${extend}_threadvar/ompcrit_tot_threadvar.txt
+
+for i in {1..30}
+do
+  # only run with the small critical section version with rtm
+  ./test_variable_critical -p ${i} >> $ORIG_PWD/logs_${extend}_threadvar/ompcrit_tot_threadvar.txt
+done
+
+echo "#### ompcrit [1*16, 30*16] threads, Long critical less activity \
+./test_variable_critical -p tcount -c 10000 ####" >>\
+ $ORIG_PWD/logs_${extend}_threadvar/ompcrit_tot_threadvar.txt
+
+for i in {1..30}
+do
+  # only run with the small critical section version with rtm
+  ./test_variable_critical -p ${i} -c 10000 >> $ORIG_PWD/logs_${extend}_threadvar/ompcrit_tot_threadvar.txt
+done
+
+echo "#### ompcrit [1*16, 30*16] threads, Long critical more activity \
+./test_variable_critical -p tcount -c 10000 -o ####" >>\
+ $ORIG_PWD/logs_${extend}_threadvar/ompcrit_tot_threadvar.txt
+
+for i in {1..30}
+do
+  # only run with the small critical section version with rtm
+  ./test_variable_critical -p ${i} -c 10000 -o >> $ORIG_PWD/logs_${extend}_threadvar/ompcrit_tot_threadvar.txt
+done
