@@ -1,0 +1,5 @@
+#### RTM [1*16, 15*16] threads, Small critical ./test_ll_coarse -p tcount ####
+0.000172
+0.000272
+0.000298
+0.000344

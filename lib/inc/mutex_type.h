@@ -1,6 +1,14 @@
 #ifndef _MUTEX_TYPE_H
 #define _MUTEX_TYPE_H
 
+typedef struct mcs_queue_node mcs_qnode;
+
+struct mcs_queue_node {
+  volatile mcs_qnode *next;
+  int wait;
+};
+
+
 typedef struct mutex {
 
 #ifdef MUTEX_SPIN
@@ -14,8 +22,9 @@ typedef struct mutex {
   int lock_count;
   int queue_count;
 #endif
-#ifdef MUTEX_MCS_TICKET
-#endif
+//#ifdef MUTEX_MCS_QUEUE
+  volatile mcs_qnode *queue_end;
+//#endif
 #ifdef MUTEX_TRANSACTION_RTM
   volatile int lock;
 #endif

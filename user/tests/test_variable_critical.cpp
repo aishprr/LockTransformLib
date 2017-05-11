@@ -1,4 +1,4 @@
-#include "../../lib/mutex/mutex_type.h"
+#include "../../lib/inc/mutex_type.h"
 #include "../../lib/inc/common.h"
 #include "../structures/ll_fine_grained.h"
 #include "../structures/ll_coarse_grained.h"

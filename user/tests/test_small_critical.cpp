@@ -1,4 +1,4 @@
-#include "../../lib/mutex/mutex_type.h"
+#include "../../lib/inc/mutex_type.h"
 #include "../structures/ll_fine_grained.h"
 #include "../structures/ll_coarse_grained.h"
 #include <omp.h>
@@ -9,12 +9,7 @@
 #include <sched.h>
 
 
-#define PARALLEL_ADDS (100)
-
-int matrix_multiply()
-{
-  return 1;
-}
+#define PARALLEL_ADDS (1)
 
 int main() {
 
