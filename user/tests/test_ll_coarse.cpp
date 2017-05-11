@@ -12,7 +12,7 @@
 
 #define OUT_STRING "Final time taken"
 #define HYPERTHREADS (16)
-#define RAND_RANGE (10000)
+#define RAND_RANGE (1000000)
 
 int compare_int(void *adata, void *bdata) {
   return ((long)(adata) - (long)(bdata));
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 
   ll_coarse l;
   ll_coarse_init(&l, compare_int);
-  srand(time(NULL));
+  srand(35);
 
   int in_par = 0;
   int def_par = 1;
@@ -53,7 +53,8 @@ int main(int argc, char *argv[]) {
   for(int u = 0; u < fin_par; u++)
   {
     ll_coarse_node *node = (ll_coarse_node *)malloc(sizeof(ll_coarse_node));
-    ll_coarse_insert(&l, node, (void *)(3));
+    int a = rand()%RAND_RANGE;
+    ll_coarse_insert(&l, node, (void *)(a));
   }
   
 #ifdef TOT_TIME

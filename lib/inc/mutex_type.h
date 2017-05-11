@@ -28,6 +28,10 @@ typedef struct mutex {
 #ifdef MUTEX_TRANSACTION_RTM
   volatile int lock;
 #endif
+#ifdef MUTEX_RTM_ADAPT
+  volatile int lock;
+  volatile int trans_wait;
+#endif
 #ifdef MUTEX_TRANSACTION_HLE
   volatile unsigned int lock;
 #endif

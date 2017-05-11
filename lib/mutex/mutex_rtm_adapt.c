@@ -3,6 +3,7 @@
 #include <immintrin.h>
 #include <stdio.h>
 #include <omp.h>
+#include <sched.h>
 
 // CITATION: guidance from https://github.com/andikleen/tsx-tools
 // https://clang.llvm.org/doxygen/rtmintrin_8h.html
@@ -12,12 +13,15 @@
 #define RETRY_OTHER (3)
 #define UNLOCKED (0)
 #define LOCKED (1)
+#define HYPERTHREADS (16)
+#define THRESHOLD (5)
 
 void __attribute__((noinline, weak)) trace_abort(unsigned status) {}
 
 int mutex_create(mutex_t *m)
 {
   m->lock = UNLOCKED;
+  m->trans_wait = 0;
   return SUCCESS_RETVAL; 
 }
 
@@ -32,9 +36,18 @@ void mutex_lock(mutex_t *m)
   unsigned status = 0;
   unsigned retry = RETRY_OTHER;
   int tid = omp_get_thread_num();
+  int tried = 0;
 
   for (i = 0; i < retry; i++) {
     dbg_printf("abotu to xbegin\n");
+    if (m->trans_wait > THRESHOLD) {
+      dbg_printf("didnt try\n");
+      break;
+      // dont even try for transactions
+    } else {
+      tried = 1;
+      __sync_fetch_and_add(&m->trans_wait, 1);
+    }
     if ((status = _xbegin()) == _XBEGIN_STARTED) {
       // now if the lock is free, that means that 
       // no one is holding a lock, so we're good to go 
@@ -45,6 +58,7 @@ void mutex_lock(mutex_t *m)
         // aborted
         // TDODO: Can also try to wait for all transactions to be over
         // and check that atomically somehow
+        __sync_fetch_and_add(&m->trans_wait, -1);
         return;
       }
       
@@ -52,10 +66,11 @@ void mutex_lock(mutex_t *m)
       // to abort since it doesnt make sense to use transactions if the lock
       // thing is being used presently
       _xabort(0xff);
+    } else {
+      // you tried, but didnt get the thing
+      // you did not abort
+      __sync_fetch_and_add(&m->trans_wait, -1);
     }
-#ifdef DROPPED_COUNT
-    dbg_printf("TID %d dropped in trial %d\n", tid, i);
-#endif
     dbg_printf("OOPS didnt work out!! status = %d %u\n", status, status);
     trace_abort(status);
     if ((status & _XABORT_EXPLICIT) && _XABORT_CODE(status) == 0xff) {
@@ -81,11 +96,21 @@ void mutex_lock(mutex_t *m)
   }
   /* Could do adaptation here */
 #ifdef DROPPED_COUNT
-  dbg_printf("had to take explicit lock\n");
+  if (!tried) {
+      // want to count only those who actually dropped not those who
+      // gave up
+      dbg_printf("TID %d dropped in trial %d\n", tid, i);
+  } else {
+    // I tried but failed
+    dbg_printf("%d\n", i);
+  }
   // for average retrials 
-  dbg_printf("%d\n", i);
+  
 #endif
-  while (!__sync_bool_compare_and_swap(&(m->lock), UNLOCKED, LOCKED));
+  while (!__sync_bool_compare_and_swap(&(m->lock), UNLOCKED, LOCKED))
+  {
+    sched_yield();
+  }
 }
 
 void mutex_unlock(mutex_t *m)
